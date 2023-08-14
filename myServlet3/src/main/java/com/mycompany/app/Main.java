@@ -4,6 +4,7 @@ import org.apache.catalina.connector.Connector;
 import org.apache.catalina.Context;
 import org.apache.catalina.startup.Tomcat;
 
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -22,6 +23,7 @@ import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 
 public class Main {
 
@@ -42,7 +44,7 @@ public class Main {
         
         // Create and configure the DispatcherServlet
         DispatcherServlet dispatcherServlet = new DispatcherServlet();
-        dispatcherServlet.setContextClass(org.springframework.web.context.support.AnnotationConfigWebApplicationContext.class); // Use AnnotationConfigWebApplicationContext
+        dispatcherServlet.setContextClass(AnnotationConfigWebApplicationContext.class); // Use AnnotationConfigWebApplicationContext
 
         // Manually create an AnnotationConfigApplicationContext and register the configuration class
         AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext(SpringConfig.class);
@@ -75,13 +77,6 @@ public class Main {
     @Configuration
     @ComponentScan(basePackages = "com.mycompany.app")
     public static class SpringConfig {
-
-        @Bean
-        public ServletRegistrationBean<DispatcherServlet> dispatcherServletRegistration() {
-            ServletRegistrationBean<DispatcherServlet> registrationBean = new ServletRegistrationBean<>(new DispatcherServlet(), "/");
-            registrationBean.setName("dispatcherServlet");
-            return registrationBean;
-        }
 
         @PostConstruct
         private void postConstruct() {
