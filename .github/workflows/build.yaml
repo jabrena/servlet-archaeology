@@ -21,12 +21,19 @@ jobs:
         run: |
           ./mvnw --batch-mode --no-transfer-progress -B verify
 
-          mvn compile exec:java -Dexec.mainClass="com.mycompany.app.Main" -pl myServlet1
+      - name: Maven Verify
+        run: |
+          ./mvnw --batch-mode --no-transfer-progress -B compile exec:java -Dexec.mainClass="com.mycompany.app.Main" -pl myServlet1 &
+          sleep 5
           curl http://localhost:8080/hello
           kill $(lsof -t -i:8080)
-          mvn compile exec:java -Dexec.mainClass="com.mycompany.app.Main" -pl myServlet2
+
+          ./mvnw --batch-mode --no-transfer-progress -B compile exec:java -Dexec.mainClass="com.mycompany.app.Main" -pl myServlet2 &
+          sleep 5
           curl http://localhost:8080/hello
           kill $(lsof -t -i:8080)
-          mvn compile exec:java -Dexec.mainClass="com.mycompany.app.Main" -pl myServlet3
+
+          ./mvnw --batch-mode --no-transfer-progress -B compile exec:java -Dexec.mainClass="com.mycompany.app.Main" -pl myServlet3 &
+          sleep 5
           curl http://localhost:8080/hello
           kill $(lsof -t -i:8080)
