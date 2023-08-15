@@ -19,7 +19,7 @@ jobs:
 
       - name: Maven Verify
         run: |
-          ./mvnw --batch-mode --no-transfer-progress -B verify
+          make project-verify
 
       - name: E2E Tests
         run: |
