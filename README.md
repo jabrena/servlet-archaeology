@@ -1,5 +1,7 @@
 # Servlet Archaeology
 
+[![CI Builds](https://github.com/jabrena/servlet-archaeology/actions/workflows/build.yaml/badge.svg)](https://github.com/jabrena/servlet-archaeology/actions/workflows/build.yaml)
+
 ## Motivation
 Spring boot is a wonderful framework around Spring Framework and make the life easier for any Software engineer daily but
 sometimes if you want to understand some decision taken by Spring boot, you need to scratch the surface and this is the purpose of this repository.
