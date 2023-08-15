@@ -1,7 +1,6 @@
 package info.jab.ms;
 
 import java.io.File;
-
 import org.apache.catalina.connector.Connector;
 import org.apache.catalina.Context;
 import org.apache.catalina.LifecycleException;
@@ -37,7 +36,6 @@ public class Main {
         wrapper.setName("dispatcherServlet");
         wrapper.setServlet(dispatcherServlet);
         context.addChild(wrapper);
-        context.addServletMappingDecoded("/", "dispatcherServlet");
         wrapper.setLoadOnStartup(1);
         wrapper.addMapping("/");
 
