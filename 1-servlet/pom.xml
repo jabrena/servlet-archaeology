@@ -13,8 +13,8 @@
   </parent>
 
   <groupId>com.mycompany.app</groupId>
-  <artifactId>myServlet3</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <artifactId>1-servlet</artifactId>
+  <version>0.1.0-SNAPSHOT</version>
   <packaging>jar</packaging>
 
   <properties>
@@ -26,10 +26,16 @@
 
   <dependencies>
     <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-web</artifactId>
+      <groupId>org.apache.tomcat.embed</groupId>
+      <artifactId>tomcat-embed-core</artifactId>
+      <version>10.1.11</version>
     </dependency>
-
+    <dependency>
+      <groupId>jakarta.servlet</groupId>
+      <artifactId>jakarta.servlet-api</artifactId>
+      <version>6.0.0</version>
+      <scope>provided</scope>
+    </dependency>
 
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -40,23 +46,21 @@
 
   <build>
     <plugins>
-
+      <!--
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
       </plugin>
-
-      <!--
+      -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.11.0</version>
-        <configuration>
-            <source>${java.version}</source>
-            <target>${java.version}</target>
+        <configuration> <!-- Compile java 17 compatible bytecode -->
+          <source>${java.version}</source>
+          <target>${java.version}</target>
         </configuration>
       </plugin>
-      -->
       <plugin>
         <artifactId>maven-surefire-plugin</artifactId>
         <version>3.1.2</version>

@@ -1,4 +1,4 @@
-package com.mycompany.app;
+package info.jab.ms;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,7 +25,7 @@ public class Main {
         tomcat.getService().addConnector(connector);
 
         File base = new File(System.getProperty("java.io.tmpdir"));
-        Context context = tomcat.addContext("/", base.getAbsolutePath());
+        Context context = tomcat.addContext("", base.getAbsolutePath());
 
         HttpServlet myServlet = new MyServlet();
         Wrapper servletWrapper = Tomcat.addServlet(context, "MyServlet", myServlet);

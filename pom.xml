@@ -7,13 +7,11 @@
 
   <groupId>info.jab.ms</groupId>
   <artifactId>servlet-archaeology</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <version>0.1.0-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.source>17</maven.compiler.source>
-    <maven.compiler.target>17</maven.compiler.target>
     <java.version>17</java.version>
   </properties>
 
@@ -36,8 +34,8 @@
   </build>
 
   <modules>
-    <module>myServlet1</module>
-    <module>myServlet2</module>
-    <module>myServlet3</module>
+    <module>1-servlet</module>
+    <module>2-spring-framework</module>
+    <module>3-spring-boot</module>
   </modules>
 </project>

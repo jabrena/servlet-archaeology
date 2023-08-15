@@ -1,4 +1,4 @@
-package com.mycompany.app;
+package info.jab.ms;
 
 import java.io.File;
 
@@ -26,14 +26,18 @@ public class Main {
         tomcat.getService().addConnector(connector);
 
         File base = new File(System.getProperty("java.io.tmpdir"));
-        Context context = tomcat.addContext("/", base.getAbsolutePath());
+        Context context = tomcat.addContext("", base.getAbsolutePath());
 
         AnnotationConfigWebApplicationContext appContext = new AnnotationConfigWebApplicationContext();
         appContext.register(SpringConfig.class);
         appContext.refresh();
 
         DispatcherServlet dispatcherServlet = new DispatcherServlet(appContext);
-        Wrapper wrapper = tomcat.addServlet("/", "dispatcherServlet", dispatcherServlet);
+        Wrapper wrapper = context.createWrapper();
+        wrapper.setName("dispatcherServlet");
+        wrapper.setServlet(dispatcherServlet);
+        context.addChild(wrapper);
+        context.addServletMappingDecoded("/", "dispatcherServlet");
         wrapper.setLoadOnStartup(1);
         wrapper.addMapping("/");
 
@@ -60,7 +64,7 @@ public class Main {
     }
 
     @Configuration
-    @ComponentScan(basePackages = "com.mycompany.app")
+    @ComponentScan(basePackages = "info.jab.ms")
     public static class SpringConfig {
 
         @PostConstruct
