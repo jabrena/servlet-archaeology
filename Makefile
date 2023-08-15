@@ -17,7 +17,7 @@ help: # *Show all recipes from this project*
 	@grep -E '^[a-zA-Z0-9 -]+:.*#'  Makefile | sort | while read -r l; do printf "\033[1;32m$$(echo $$l | cut -f 1 -d':')\033[00m:$$(echo $$l | cut -f 2- -d'#')\n"; done
 
 project-verify: # Verify the whole project
-	$(MVN_CMD) clean verify
+	$(MVN_CMD) --batch-mode --no-transfer-progress clean verify
 servlet: # Run an example using Apache tomcat and a Servlet
 	$(call run-example,1-servlet)
 spring-framework: # Run an example using Spring Framework only
