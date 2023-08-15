@@ -7,7 +7,6 @@ mvn compile exec:java -Dexec.mainClass="com.mycompany.app.Main" -pl myServlet1
 mvn compile exec:java -Dexec.mainClass="com.mycompany.app.Main" -pl myServlet2
 mvn compile exec:java -Dexec.mainClass="com.mycompany.app.Main" -pl myServlet3
 
-lsof -i :8080
 curl http://localhost:8080/hello
-
+kill $(lsof -t -i:8080)
 ```

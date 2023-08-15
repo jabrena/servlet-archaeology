@@ -18,7 +18,7 @@ import jakarta.annotation.PostConstruct;
 public class Main {
 
     public static void main(String[] args) throws Exception {
-        
+
         Connector connector = new Connector();
         connector.setPort(8080);
 
@@ -30,20 +30,20 @@ public class Main {
         Context context = tomcat.addContext("/", base.getAbsolutePath());
 
         AnnotationConfigWebApplicationContext appContext = new AnnotationConfigWebApplicationContext();
-		appContext.register(SpringConfig.class);
-		appContext.refresh();
-        
+        appContext.register(SpringConfig.class);
+        appContext.refresh();
+
         DispatcherServlet dispatcherServlet = new DispatcherServlet(appContext);
-		Wrapper wrapper = tomcat.addServlet("/", "dispatcherServlet", dispatcherServlet);
-		wrapper.setLoadOnStartup(1);
-		wrapper.addMapping("/");
-        
+        Wrapper wrapper = tomcat.addServlet("/", "dispatcherServlet", dispatcherServlet);
+        wrapper.setLoadOnStartup(1);
+        wrapper.addMapping("/");
+
         try {
-			tomcat.start();
-			tomcat.getServer().await();
-		} catch (LifecycleException e) {
-			e.printStackTrace();
-		}
+            tomcat.start();
+            tomcat.getServer().await();
+        } catch (LifecycleException e) {
+            e.printStackTrace();
+        }
     }
 
     @RestController
@@ -51,7 +51,7 @@ public class Main {
 
         @GetMapping("/hello")
         public String hello() {
-            return "Hello World";
+            return "Hello world";
         }
 
         @PostConstruct
