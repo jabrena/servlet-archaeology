@@ -3,9 +3,10 @@
 Learning about how Spring interacts with a Servlet container like Tomcat.
 
 ```bash
-mvn compile exec:java -Dexec.mainClass="com.mycompany.app.Main" -pl myServlet1
-mvn compile exec:java -Dexec.mainClass="com.mycompany.app.Main" -pl myServlet2
-mvn compile exec:java -Dexec.mainClass="com.mycompany.app.Main" -pl myServlet3
+mvn clean verify
+mvn compile exec:java -Dexec.mainClass="info.jab.ms.Main" -pl 1-servlet
+mvn compile exec:java -Dexec.mainClass="info.jab.ms.Main" -pl 2-spring-framework
+mvn compile exec:java -Dexec.mainClass="info.jab.ms.Main" -pl 3-spring-boot
 
 curl http://localhost:8080/hello
 kill $(lsof -t -i:8080)

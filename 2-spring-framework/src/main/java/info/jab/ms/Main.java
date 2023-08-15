@@ -1,4 +1,4 @@
-package com.mycompany.app;
+package info.jab.ms;
 
 import java.io.File;
 
@@ -60,7 +60,7 @@ public class Main {
     }
 
     @Configuration
-    @ComponentScan(basePackages = "com.mycompany.app")
+    @ComponentScan(basePackages = "info.jab.ms")
     public static class SpringConfig {
 
         @PostConstruct

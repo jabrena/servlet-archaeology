@@ -1,4 +1,4 @@
-package com.mycompany.app;
+package info.jab.ms;
 
 import java.io.File;
 import java.io.IOException;
