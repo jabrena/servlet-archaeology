@@ -25,7 +25,6 @@ public class Main {
         Tomcat tomcat = new Tomcat();
         tomcat.getService().addConnector(connector);
 
-        // Add a servlet context and configure the Spring Boot application
         File base = new File(System.getProperty("java.io.tmpdir"));
         Context context = tomcat.addContext("/", base.getAbsolutePath());
 
