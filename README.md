@@ -2,6 +2,8 @@
 
 [![CI Builds](https://github.com/jabrena/servlet-archaeology/actions/workflows/build.yaml/badge.svg)](https://github.com/jabrena/servlet-archaeology/actions/workflows/build.yaml)
 
+[![SonarCloud](https://sonarcloud.io/images/project_badges/sonarcloud-white.svg)](https://sonarcloud.io/summary/new_code?id=jabrena_servlet-archaeology)
+
 ## Motivation
 Spring Boot is an exceptional solution built upon the foundation of the Spring Framework, greatly simplifying the daily tasks of software engineers. However, there are instances when comprehending certain decisions made within Spring Boot requires delving beneath the surface. This repository serves precisely that purpose – shedding light on these intricacies.
 
