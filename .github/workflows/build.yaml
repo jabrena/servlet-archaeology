@@ -26,32 +26,23 @@ jobs:
           EXPECTED_RESULT="Hello world"
           URL="http://localhost:8080/hello"
 
-          ./mvnw --batch-mode --no-transfer-progress -B compile exec:java -Dexec.mainClass="com.mycompany.app.Main" -pl myServlet1 &
-          sleep 10
-          RESPONSE=$(curl -s "$URL")
-          if [ "$RESPONSE" = "$EXPECTED_RESULT" ]; then
-              echo "OK"
-          else
-              echo "KO"
-          fi
-          kill $(lsof -t -i:8080)
+          function run_test {
+              SERVLET_NAME=$1
+              echo "Running test for $SERVLET_NAME..."
+              
+              ./mvnw --batch-mode --no-transfer-progress -B compile exec:java -Dexec.mainClass="com.mycompany.app.Main" -pl "$SERVLET_NAME" &
+              sleep 10
+              RESPONSE=$(curl -s "$URL")
+              
+              if [ "$RESPONSE" = "$EXPECTED_RESULT" ]; then
+                  echo "OK"
+              else
+                  echo "KO"
+              fi
+              
+              kill $(lsof -t -i:8080)
+          }
 
-          ./mvnw --batch-mode --no-transfer-progress -B compile exec:java -Dexec.mainClass="com.mycompany.app.Main" -pl myServlet2 &
-          sleep 10
-          RESPONSE=$(curl -s "$URL")
-          if [ "$RESPONSE" = "$EXPECTED_RESULT" ]; then
-              echo "OK"
-          else
-              echo "KO"
-          fi
-          kill $(lsof -t -i:8080)
-
-          ./mvnw --batch-mode --no-transfer-progress -B compile exec:java -Dexec.mainClass="com.mycompany.app.Main" -pl myServlet3 &
-          sleep 10
-          RESPONSE=$(curl -s "$URL")
-          if [ "$RESPONSE" = "$EXPECTED_RESULT" ]; then
-              echo "OK"
-          else
-              echo "KO"
-          fi
-          kill $(lsof -t -i:8080)
+          run_test "myServlet1"
+          run_test "myServlet2"
+          run_test "myServlet3"
