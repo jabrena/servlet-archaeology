@@ -17,15 +17,15 @@ public class Main {
   @RestController
   public static class MyRestController {
 
-      @GetMapping("/hello")
-      public String hello() {
-          return "Hello World";
-      }
+    @GetMapping("/hello")
+    public String hello() {
+      return "Hello World";
+    }
 
-      @PostConstruct
-      private void postConstruct() {
-          System.out.println("Running RestController");
-      }
+    @PostConstruct
+    private void postConstruct() {
+      System.out.println("Running RestController");
+    }
   }
 
 }
