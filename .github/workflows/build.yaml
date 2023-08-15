@@ -23,11 +23,11 @@ jobs:
 
       - name: E2E Tests
         run: |
-          EXPECTED_RESULT="Hello world"  # Set your expected result here
+          EXPECTED_RESULT="Hello world"
           URL="http://localhost:8080/hello"
 
           ./mvnw --batch-mode --no-transfer-progress -B compile exec:java -Dexec.mainClass="com.mycompany.app.Main" -pl myServlet1 &
-          sleep 5
+          sleep 10
           RESPONSE=$(curl -s "$URL")
           if [ "$RESPONSE" = "$EXPECTED_RESULT" ]; then
               echo "OK"
@@ -37,7 +37,7 @@ jobs:
           kill $(lsof -t -i:8080)
 
           ./mvnw --batch-mode --no-transfer-progress -B compile exec:java -Dexec.mainClass="com.mycompany.app.Main" -pl myServlet2 &
-          sleep 5
+          sleep 10
           RESPONSE=$(curl -s "$URL")
           if [ "$RESPONSE" = "$EXPECTED_RESULT" ]; then
               echo "OK"
@@ -47,7 +47,7 @@ jobs:
           kill $(lsof -t -i:8080)
 
           ./mvnw --batch-mode --no-transfer-progress -B compile exec:java -Dexec.mainClass="com.mycompany.app.Main" -pl myServlet3 &
-          sleep 5
+          sleep 10
           RESPONSE=$(curl -s "$URL")
           if [ "$RESPONSE" = "$EXPECTED_RESULT" ]; then
               echo "OK"
