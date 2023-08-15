@@ -3,10 +3,9 @@
 [![CI Builds](https://github.com/jabrena/servlet-archaeology/actions/workflows/build.yaml/badge.svg)](https://github.com/jabrena/servlet-archaeology/actions/workflows/build.yaml)
 
 ## Motivation
-Spring boot is a wonderful framework around Spring Framework and make the life easier for any Software engineer daily but
-sometimes if you want to understand some decision taken by Spring boot, you need to scratch the surface and this is the purpose of this repository.
+Spring Boot is an exceptional solution built upon the foundation of the Spring Framework, greatly simplifying the daily tasks of software engineers. However, there are instances when comprehending certain decisions made within Spring Boot requires delving beneath the surface. This repository serves precisely that purpose – shedding light on these intricacies.
 
-I would like to underdand some details about the interaction between a Servlet container like Tomcat and Spring Framework.
+Presently, I am keen on gaining a deeper understanding of the dynamic interplay between a Servlet container, such as Tomcat, and the intricate mechanics of the Spring Framework.
 
 ```bash
 make help
