@@ -9,10 +9,10 @@ sometimes if you want to understand some decision taken by Spring boot, you need
 I would like to underdand some details about the interaction between a Servlet container like Tomcat and Spring Framework.
 
 ```bash
-mvn clean verify
-mvn compile exec:java -Dexec.mainClass="info.jab.ms.Main" -pl 1-servlet
-mvn compile exec:java -Dexec.mainClass="info.jab.ms.Main" -pl 2-spring-framework
-mvn compile exec:java -Dexec.mainClass="info.jab.ms.Main" -pl 3-spring-boot
+make help
+make servlet
+make spring-framework
+make spring-boot
 
 curl http://localhost:8080/hello
 kill $(lsof -t -i:8080)
