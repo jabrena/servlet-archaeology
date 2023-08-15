@@ -17,7 +17,7 @@ mvn compile exec:java -Dexec.mainClass="info.jab.ms.Main" -pl 3-spring-boot
 curl http://localhost:8080/hello
 kill $(lsof -t -i:8080)
 ```
-## References
+## References
 
 - https://tomcat.apache.org/
 - https://docs.spring.io/spring-framework/reference/web/webmvc.html
