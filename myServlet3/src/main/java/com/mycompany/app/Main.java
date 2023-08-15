@@ -1,63 +1,49 @@
 package com.mycompany.app;
 
+import java.io.File;
+
 import org.apache.catalina.connector.Connector;
 import org.apache.catalina.Context;
+import org.apache.catalina.LifecycleException;
+import org.apache.catalina.Wrapper;
 import org.apache.catalina.startup.Tomcat;
-
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
-import org.springframework.boot.web.servlet.ServletRegistrationBean;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.GetMapping;
-import jakarta.annotation.PostConstruct;
-import org.springframework.boot.web.servlet.ServletRegistrationBean;
-import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
-import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
+import jakarta.annotation.PostConstruct;
 
 public class Main {
 
     public static void main(String[] args) throws Exception {
-        int port = 8081; // specify the desired port
+        
+        Connector connector = new Connector();
+        connector.setPort(8080);
 
         Tomcat tomcat = new Tomcat();
-        tomcat.setBaseDir("."); // Set the base directory (optional)
-
-        // Set up the connector
-        Connector connector = new Connector();
-        connector.setPort(port);
         tomcat.getService().addConnector(connector);
 
         // Add a servlet context and configure the Spring Boot application
-        Context context = tomcat.addContext("", null);
+        File base = new File(System.getProperty("java.io.tmpdir"));
+        Context context = tomcat.addContext("/", base.getAbsolutePath());
 
+        AnnotationConfigWebApplicationContext appContext = new AnnotationConfigWebApplicationContext();
+		appContext.register(SpringConfig.class);
+		appContext.refresh();
         
-        // Create and configure the DispatcherServlet
-        DispatcherServlet dispatcherServlet = new DispatcherServlet();
-        dispatcherServlet.setContextClass(AnnotationConfigWebApplicationContext.class); // Use AnnotationConfigWebApplicationContext
-
-        // Manually create an AnnotationConfigApplicationContext and register the configuration class
-        AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext(SpringConfig.class);
+        DispatcherServlet dispatcherServlet = new DispatcherServlet(appContext);
+		Wrapper wrapper = tomcat.addServlet("/", "dispatcherServlet", dispatcherServlet);
+		wrapper.setLoadOnStartup(1);
+		wrapper.addMapping("/");
         
-        // Set the DispatcherServlet's application context
-        dispatcherServlet.setApplicationContext(applicationContext);
-
-        // Register the DispatcherServlet as a servlet
-        Tomcat.addServlet(context, "dispatcherServlet", dispatcherServlet);
-        context.addServletMappingDecoded("/", "dispatcherServlet");
-
-        tomcat.start();
-        tomcat.getServer().await();
+        try {
+			tomcat.start();
+			tomcat.getServer().await();
+		} catch (LifecycleException e) {
+			e.printStackTrace();
+		}
     }
 
     @RestController
@@ -65,7 +51,7 @@ public class Main {
 
         @GetMapping("/hello")
         public String hello() {
-            return "Hello, Spring Boot!";
+            return "Hello World";
         }
 
         @PostConstruct
