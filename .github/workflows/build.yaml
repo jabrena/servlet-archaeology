@@ -21,19 +21,37 @@ jobs:
         run: |
           ./mvnw --batch-mode --no-transfer-progress -B verify
 
-      - name: Maven Verify
+      - name: E2E Tests
         run: |
+          EXPECTED_RESULT="Hello world"  # Set your expected result here
+          URL="http://localhost:8080/hello"
+
           ./mvnw --batch-mode --no-transfer-progress -B compile exec:java -Dexec.mainClass="com.mycompany.app.Main" -pl myServlet1 &
           sleep 5
-          curl http://localhost:8080/hello
+          RESPONSE=$(curl -s "$URL")
+          if [ "$RESPONSE" = "$EXPECTED_RESULT" ]; then
+              echo "OK"
+          else
+              echo "KO"
+          fi
           kill $(lsof -t -i:8080)
 
           ./mvnw --batch-mode --no-transfer-progress -B compile exec:java -Dexec.mainClass="com.mycompany.app.Main" -pl myServlet2 &
           sleep 5
-          curl http://localhost:8080/hello
+          RESPONSE=$(curl -s "$URL")
+          if [ "$RESPONSE" = "$EXPECTED_RESULT" ]; then
+              echo "OK"
+          else
+              echo "KO"
+          fi
           kill $(lsof -t -i:8080)
 
           ./mvnw --batch-mode --no-transfer-progress -B compile exec:java -Dexec.mainClass="com.mycompany.app.Main" -pl myServlet3 &
           sleep 5
-          curl http://localhost:8080/hello
+          RESPONSE=$(curl -s "$URL")
+          if [ "$RESPONSE" = "$EXPECTED_RESULT" ]; then
+              echo "OK"
+          else
+              echo "KO"
+          fi
           kill $(lsof -t -i:8080)
