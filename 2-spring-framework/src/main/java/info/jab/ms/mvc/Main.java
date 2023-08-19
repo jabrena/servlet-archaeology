@@ -1,4 +1,4 @@
-package info.jab.ms;
+package info.jab.ms.mvc;
 
 import java.io.File;
 import org.apache.catalina.connector.Connector;

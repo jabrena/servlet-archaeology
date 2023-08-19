@@ -14,7 +14,8 @@ Presently, I am keen on gaining a deeper understanding of the dynamic interplay 
 ```bash
 make help
 make servlet
-make spring-framework
+make spring-framework-mvc
+make spring-framework-mvcfn
 make spring-boot
 
 curl http://localhost:8080/hello

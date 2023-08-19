@@ -19,8 +19,11 @@ help: # *Show all recipes from this project*
 project-verify: # Verify the whole project
 	$(MVN_CMD) --batch-mode --no-transfer-progress clean verify
 servlet: # Run an example using Apache tomcat and a Servlet
-	$(call run-example,1-servlet)
-spring-framework: # Run an example using Spring Framework only
-	$(call run-example,2-spring-framework)
+	$(MVN_CMD) --batch-mode --no-transfer-progress compile exec:java -Dexec.mainClass="info.jab.ms.Main" -pl 1-servlet
+spring-framework-mvc: # Run an example using Spring Framework MVC
+	$(MVN_CMD) --batch-mode --no-transfer-progress compile exec:java -Dexec.mainClass="info.jab.ms.mvc.Main" -pl 2-spring-framework
+spring-framework-mvcfn: # Run an example using Spring Framework MVC with functional style
+	$(MVN_CMD) --batch-mode --no-transfer-progress compile exec:java -Dexec.mainClass="info.jab.ms.mvcfn.Main" -pl 2-spring-framework
 spring-boot: # Run an example using Spring Boot
-	$(call run-example,3-spring-boot)
+	$(MVN_CMD) --batch-mode --no-transfer-progress compile exec:java -Dexec.mainClass="info.jab.ms.Main" -pl 3-spring-boot
+
