@@ -1,22 +1,18 @@
-package info.jab.ms.mvcfn;
+package info.jab.ms.jsp;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.apache.catalina.Context;
 import org.apache.catalina.startup.Tomcat;
 
-import org.springframework.http.converter.ByteArrayHttpMessageConverter;
-import org.springframework.http.converter.StringHttpMessageConverter;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.http.converter.support.AllEncompassingFormHttpMessageConverter;
 import org.springframework.web.context.support.StaticWebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
-import org.springframework.web.servlet.HandlerMapping;
+import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.function.RouterFunction;
 import org.springframework.web.servlet.function.RouterFunctions;
 import org.springframework.web.servlet.function.ServerResponse;
-import org.springframework.web.servlet.function.support.RouterFunctionMapping;
+import org.springframework.web.servlet.view.InternalResourceViewResolver;
+import org.springframework.web.servlet.view.JstlView;
 
 public class Main {
 
@@ -26,16 +22,14 @@ public class Main {
 
 	static StaticWebApplicationContext applicationContext(RouterFunction<ServerResponse> routes) {
 		StaticWebApplicationContext applicationContext = new StaticWebApplicationContext();
-		applicationContext.registerBean(DispatcherServlet.HANDLER_MAPPING_BEAN_NAME,
-				HandlerMapping.class, () -> {
-					RouterFunctionMapping mapping = new RouterFunctionMapping(routes);
-					mapping.setMessageConverters(List.of(
-							new StringHttpMessageConverter(),
-							new ByteArrayHttpMessageConverter(),
-							new AllEncompassingFormHttpMessageConverter(),
-							new MappingJackson2HttpMessageConverter()));
-					return mapping;
-				});
+		// Add JSP View Resolver
+		applicationContext.registerBean(ViewResolver.class, () -> {
+			InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
+			viewResolver.setViewClass(JstlView.class);
+			viewResolver.setPrefix("/WEB-INF/views/"); // Path to JSP files
+			viewResolver.setSuffix(".jsp");
+			return viewResolver;
+		});
 		return applicationContext;
 	}
 
@@ -52,7 +46,7 @@ public class Main {
 
 	static RouterFunction<ServerResponse> routes() {
 		return RouterFunctions.route()
-				.GET("/hello", request -> ServerResponse.ok().body("Hello world"))
+				.GET("/jsp", request -> ServerResponse.ok().render("hello")) // Handle JSP rendering
 				.build();
 	}
 
