@@ -44,5 +44,6 @@ jobs:
           }
 
           run_test "servlet"
-          run_test "spring-framework"
+          run_test "spring-framework-mvc"
+          run_test "spring-framework-mvcfn"
           run_test "spring-boot"

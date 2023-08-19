@@ -1,4 +1,4 @@
-package info.jab.ms;
+package info.jab.ms.mvc;
 
 import java.io.File;
 import org.apache.catalina.connector.Connector;
@@ -43,7 +43,7 @@ public class Main {
             tomcat.start();
             tomcat.getServer().await();
         } catch (LifecycleException e) {
-            e.printStackTrace();
+            System.out.println("Katakroker");
         }
     }
 
