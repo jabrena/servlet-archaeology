@@ -43,7 +43,7 @@ public class Main {
             tomcat.start();
             tomcat.getServer().await();
         } catch (LifecycleException e) {
-            e.printStackTrace();
+            System.out.println("Katakroker");
         }
     }
 
