@@ -1,7 +1,5 @@
 package info.jab.ms.jsp;
 
-import java.util.Optional;
-
 import org.apache.catalina.Context;
 import org.apache.catalina.startup.Tomcat;
 
@@ -26,7 +24,7 @@ public class Main {
 		applicationContext.registerBean(ViewResolver.class, () -> {
 			InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
 			viewResolver.setViewClass(JstlView.class);
-			viewResolver.setPrefix("/WEB-INF/views/"); // Path to JSP files
+			viewResolver.setPrefix("WEB-INF/hello.jsp"); // Path to JSP files
 			viewResolver.setSuffix(".jsp");
 			return viewResolver;
 		});
@@ -35,8 +33,7 @@ public class Main {
 
 	static void startTomcat() throws Exception {
 		Tomcat tomcat = new Tomcat();
-		int port = Optional.ofNullable(System.getenv("PORT")).map(Integer::parseInt).orElse(8080);
-		tomcat.getConnector().setPort(port);
+		tomcat.getConnector().setPort(8080);
 		Context context = tomcat.addContext("", System.getProperty("java.io.tmpdir"));
 		DispatcherServlet dispatcherServlet = new DispatcherServlet(applicationContext(routes()));
 		Tomcat.addServlet(context, "dispatcherServlet", dispatcherServlet).addMapping("/");
@@ -46,7 +43,7 @@ public class Main {
 
 	static RouterFunction<ServerResponse> routes() {
 		return RouterFunctions.route()
-				.GET("/jsp", request -> ServerResponse.ok().render("hello")) // Handle JSP rendering
+				.GET("/hello", request -> ServerResponse.ok().render("hello")) // Handle JSP rendering
 				.build();
 	}
 
