@@ -11,13 +11,17 @@ Spring Boot is an exceptional solution built upon the foundation of the Spring F
 
 Presently, I am keen on gaining a deeper understanding of the dynamic interplay between a Servlet container, such as Tomcat, and the intricate mechanics of the Spring Framework.
 
+![](./docs/dispatcherServlet.png)
+
 ```bash
 make help
 make servlet
 make spring-framework-jsp2
 make spring-framework-mvc
 make spring-framework-mvcfn
-make spring-boot
+make spring-boot-1
+make spring-boot-2
+make spring-boot-3
 
 open http://localhost:8080/hello
 curl http://localhost:8080/hello

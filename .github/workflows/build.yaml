@@ -48,3 +48,4 @@ jobs:
           run_test "spring-framework-mvcfn"
           run_test "spring-boot-1"
           run_test "spring-boot-2"
+          run_test "spring-boot-3"
