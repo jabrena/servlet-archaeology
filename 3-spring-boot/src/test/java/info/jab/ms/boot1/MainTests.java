@@ -1,5 +1,6 @@
-package info.jab.ms;
+package info.jab.ms.boot1;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 

@@ -33,8 +33,7 @@ public class Main {
 							new StringHttpMessageConverter(),
 							new ByteArrayHttpMessageConverter(),
 							new AllEncompassingFormHttpMessageConverter(),
-							new MappingJackson2HttpMessageConverter()
-					));
+							new MappingJackson2HttpMessageConverter()));
 					return mapping;
 				});
 		return applicationContext;
@@ -51,7 +50,7 @@ public class Main {
 		tomcat.getServer().await();
 	}
 
-    static RouterFunction<ServerResponse> routes() {
+	static RouterFunction<ServerResponse> routes() {
 		return RouterFunctions.route()
 				.GET("/hello", request -> ServerResponse.ok().body("Hello world"))
 				.build();
