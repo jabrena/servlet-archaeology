@@ -12,19 +12,18 @@ public class Main {
     public static void main(String[] args) {
         SpringApplication.run(Main.class, args);
     }
+}
 
-    @RestController
-    public static class MyRestController {
+@RestController
+class MyRestController {
 
-        @GetMapping("/hello")
-        public String hello() {
-            return "Hello world";
-        }
-
-        @PostConstruct
-        private void postConstruct() {
-            System.out.println("Running RestController");
-        }
+    @GetMapping("/hello")
+    public String hello() {
+        return "Hello world";
     }
 
+    @PostConstruct
+    private void postConstruct() {
+        System.out.println("Running RestController");
+    }
 }
