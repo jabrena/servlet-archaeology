@@ -34,4 +34,19 @@ spring-boot-2: # Run an example using Spring Boot
 	$(MVN_CMD) --batch-mode --no-transfer-progress compile exec:java -Dexec.mainClass="info.jab.ms.boot2.Main" -pl 3-spring-boot
 spring-boot-3: # Run an example using Spring Boot
 	$(MVN_CMD) --batch-mode --no-transfer-progress compile exec:java -Dexec.mainClass="info.jab.ms.boot3.Main" -pl 3-spring-boot
-
+spring-boot-4: # Run an example using Spring Boot
+	$(MVN_CMD) --batch-mode --no-transfer-progress compile exec:java -Dexec.mainClass="info.jab.ms.boot4.Main" -pl 3-spring-boot
+spring-boot-5: # Run an example using Spring Boot
+	$(MVN_CMD) --batch-mode --no-transfer-progress compile exec:java -Dexec.mainClass="info.jab.ms.boot5.Main" -pl 3-spring-boot
+spring-boot-6: # Run an example using Spring Boot
+	$(MVN_CMD) --batch-mode --no-transfer-progress compile exec:java -Dexec.mainClass="info.jab.ms.boot6.Main" -pl 3-spring-boot
+spring-boot-7: # Run an example using Spring Boot
+	$(MVN_CMD) --batch-mode --no-transfer-progress compile exec:java -Dexec.mainClass="info.jab.ms.boot7.Main" -pl 3-spring-boot
+spring-boot-8: # Run an example using Spring Boot
+	$(MVN_CMD) --batch-mode --no-transfer-progress compile exec:java -Dexec.mainClass="info.jab.ms.boot8.Main" -pl 3-spring-boot
+spring-boot-9: # Run an example using Spring Boot
+	$(MVN_CMD) --batch-mode --no-transfer-progress compile exec:java -Dexec.mainClass="info.jab.ms.boot9.Main" -pl 3-spring-boot
+spring-boot-10: # Run an example using Spring Boot
+	$(MVN_CMD) --batch-mode --no-transfer-progress compile exec:java -Dexec.mainClass="info.jab.ms.boot10.Main" -pl 3-spring-boot
+spring-boot-11: # Run an example using Spring Boot
+	$(MVN_CMD) --batch-mode --no-transfer-progress compile exec:java -Dexec.mainClass="info.jab.ms.boot11.Main" -pl 3-spring-boot
