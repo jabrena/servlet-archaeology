@@ -12,7 +12,7 @@ import org.springframework.web.servlet.function.RouterFunction;
 import org.springframework.web.servlet.function.RouterFunctions;
 import org.springframework.web.servlet.function.ServerResponse;
 
-@Import({ApplicationConfiguration.class})
+@Import({WebConfig.class})
 public class Main extends SpringBootServletInitializer {
 
     public static void main(String[] args) {
@@ -35,4 +35,4 @@ public class Main extends SpringBootServletInitializer {
         ServletWebServerFactoryAutoConfiguration.class,
         DispatcherServletAutoConfiguration.class,
 })
-class ApplicationConfiguration {}
+class WebConfig {}

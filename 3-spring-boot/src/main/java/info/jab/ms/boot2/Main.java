@@ -27,12 +27,11 @@ public class Main {
         registrationBean.setLoadOnStartup(1);
         return registrationBean;
     }
+}
 
-    public static class HelloServlet extends HttpServlet {
-        @Override
-        protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-            resp.getWriter().write("Hello world");
-        }
+class HelloServlet extends HttpServlet {
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        resp.getWriter().write("Hello world");
     }
-
 }
