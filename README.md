@@ -16,7 +16,7 @@ Presently, I am keen on gaining a deeper understanding of the dynamic interplay 
 ```bash
 make help
 make servlet
-make spring-framework-jsp2
+make spring-framework-jsp
 make spring-framework-mvc
 make spring-framework-mvcfn
 make spring-boot-1

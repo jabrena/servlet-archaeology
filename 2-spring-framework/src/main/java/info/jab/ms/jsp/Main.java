@@ -1,114 +1,51 @@
 package info.jab.ms.jsp;
 
-import jakarta.annotation.PostConstruct;
-import jakarta.servlet.ServletContext;
-import jakarta.servlet.ServletRegistration;
-import org.apache.catalina.Context;
-import org.apache.catalina.LifecycleException;
-import org.apache.catalina.Wrapper;
-import org.apache.catalina.startup.Tomcat;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.WebApplicationInitializer;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
-import org.springframework.web.servlet.DispatcherServlet;
-import org.springframework.web.servlet.ViewResolver;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.view.InternalResourceViewResolver;
-import org.springframework.web.servlet.view.JstlView;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.web.servlet.ServletComponentScan;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.stereotype.Service;
 
-import java.io.File;
+import java.io.IOException;
 
-@EnableWebMvc
+//TODO Remove autoconfiguration
+@EnableAutoConfiguration
+@ComponentScan
+@ServletComponentScan
 public class Main {
 
-	public static void main(String[] args) throws Exception {
-		startTomcat();
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(Main.class, args);
+    }
 
-	static void startTomcat() throws Exception {
-		Tomcat tomcat = new Tomcat();
-		tomcat.getConnector().setPort(8080);
+    @Service
+    public static class GreetingService {
 
-		/*
-		Context context = tomcat.addContext("", System.getProperty("java.io.tmpdir"));
+        public String greet(String name) {
+            return "Hello " + name + "!";
+        }
 
-		AnnotationConfigWebApplicationContext appContext = new AnnotationConfigWebApplicationContext();
-		appContext.register(SpringConfig.class);
-		appContext.refresh();
+    }
 
-		DispatcherServlet dispatcherServlet = new DispatcherServlet(appContext);
-		Wrapper wrapper = context.createWrapper();
-		wrapper.setName("dispatcherServlet");
-		wrapper.setServlet(dispatcherServlet);
-		context.addChild(wrapper);
-		wrapper.setLoadOnStartup(1);
-		wrapper.addMapping("/");
+    @WebServlet(urlPatterns = "/hello")
+    public static class HelloServlet extends HttpServlet {
 
-		 */
+        @Autowired
+        GreetingService greetingService;
 
-		try {
-			tomcat.start();
-			tomcat.getServer().await();
-		} catch (LifecycleException e) {
-			System.out.println("Katakroker");
-		}
-	}
-
-	@Configuration
-	public class MyWebApplicationInitializer implements WebApplicationInitializer {
-
-		@PostConstruct
-		private void postConstruct() {
-			System.out.println("Running Spring Config 2");
-		}
-		@Override
-		public void onStartup(ServletContext servletContext) {
-
-			// Load Spring web application configuration
-			AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
-			context.register(SpringConfig.class);
-
-			// Create and register the DispatcherServlet
-			DispatcherServlet dispatcherServlet = new DispatcherServlet(context);
-			ServletRegistration.Dynamic registration = servletContext.addServlet("dispatcherServlet", dispatcherServlet);
-			registration.setLoadOnStartup(1);
-			registration.addMapping("/");
-		}
-	}
-
-	@Configuration
-	static class SpringConfig {
-
-		@Controller
-		public static class MyRestController {
-
-			@GetMapping("/hello2")
-			public String hello() {
-				return "hello2";
-			}
-
-			@PostConstruct
-			private void postConstruct() {
-				System.out.println("Running RestController");
-			}
-		}
-
-		@Bean
-		public ViewResolver viewResolver() {
-			InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
-			viewResolver.setViewClass(JstlView.class);
-			viewResolver.setPrefix("/WEB-INF/");
-			viewResolver.setSuffix(".jsp");
-			return viewResolver;
-		}
-
-		@PostConstruct
-		private void postConstruct() {
-			System.out.println("Running Spring Config");
-		}
-	}
+        @Override
+        protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+            String name = req.getParameter("name");
+            String greeting = greetingService.greet(name == null ? "World" : name);
+            req.setAttribute("greeting", greeting);
+            req.getRequestDispatcher("WEB-INF/hello.jsp").forward(req, resp);
+        }
+    }
 
 }
