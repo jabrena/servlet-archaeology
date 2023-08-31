@@ -45,6 +45,5 @@ kill $(lsof -t -i:8080)
 - https://docs.spring.io/spring-framework/reference/web/webmvc.html
 - https://github.com/spring-projects/spring-boot/tree/main/spring-boot-project/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure
 - https://dunwu.github.io/spring-tutorial/pages/20287b/#%E7%AE%80%E4%BB%8B
-- https://github.com/cckmit/Java_notes/tree/master/02.spring%E5%AE%B6%E6%97%8F%E6%A1%86%E6%9E%B6/SpringCode_%20senior_heima/show/src/main/java/com/itheima
 - https://github.com/dsyer/spring-boot-micro-apps/tree/main
 - https://github.com/spring-projects-experimental/spring-boot-thin-launcher
