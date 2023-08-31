@@ -16,6 +16,7 @@ import org.springframework.boot.web.server.WebServerFactoryCustomizerBeanPostPro
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.GenericApplicationContext;
 import org.springframework.format.support.DefaultFormattingConversionService;
 import org.springframework.format.support.FormattingConversionService;
@@ -60,13 +61,6 @@ public class Main {
 		new SpringApplicationBuilder(Main.class)
 				.initializers(new WebAppInitializer()).run(args);
 	}
-
-	@Bean
-	RouterFunction<ServerResponse> routes() {
-		return RouterFunctions.route()
-				.GET("/hello", request -> ServerResponse.ok().body("Hello world"))
-				.build();
-	}
 }
 
 class WebAppInitializer implements ApplicationContextInitializer<GenericApplicationContext> {
@@ -106,6 +100,7 @@ class WebAppInitializer implements ApplicationContextInitializer<GenericApplicat
 		context.registerBean(CompositeUriComponentsContributor.class,
 				() -> mvcUriComponentsContributor(context.getBean(RequestMappingHandlerAdapter.class)));
 		context.registerBean(HandlerExceptionResolver.class, this::handlerExceptionResolver);
+		context.registerBean(RouterFunction.class, this::routes);
 		context.registerShutdownHook();
 	}
 
@@ -163,6 +158,13 @@ class WebAppInitializer implements ApplicationContextInitializer<GenericApplicat
 
 	protected RequestMappingHandlerMapping createRequestMappingHandlerMapping() {
 		return new RequestMappingHandlerMapping();
+	}
+
+	//TODO Why is not working?
+	RouterFunction<ServerResponse> routes() {
+		return RouterFunctions.route()
+				.GET("/hello", request -> ServerResponse.ok().body("Hello world"))
+				.build();
 	}
 
 	protected PathMatchConfigurer getPathMatchConfigurer() {

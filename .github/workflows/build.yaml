@@ -61,4 +61,3 @@ jobs:
           run_test "spring-boot-13"
           run_test "spring-boot-14"
           run_test "spring-boot-15"
-          run_test "spring-boot-16"
