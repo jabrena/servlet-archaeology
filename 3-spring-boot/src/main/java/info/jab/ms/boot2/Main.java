@@ -1,15 +1,13 @@
 package info.jab.ms.boot2;
 
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
-import org.springframework.boot.web.servlet.ServletRegistrationBean;
-import org.springframework.boot.web.servlet.server.ServletWebServerFactory;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import java.io.IOException;
+import org.springframework.web.servlet.function.RouterFunction;
+import org.springframework.web.servlet.function.RouterFunctions;
+import org.springframework.web.servlet.function.ServerResponse;
 
+@SpringBootApplication
 public class Main {
 
     public static void main(String[] args) {
@@ -17,21 +15,9 @@ public class Main {
     }
 
     @Bean
-    public ServletWebServerFactory servletWebServerFactory() {
-        return new TomcatServletWebServerFactory();
-    }
-
-    @Bean
-    public ServletRegistrationBean myServlet() {
-        ServletRegistrationBean registrationBean = new ServletRegistrationBean(new HelloServlet(), "/hello");
-        registrationBean.setLoadOnStartup(1);
-        return registrationBean;
-    }
-}
-
-class HelloServlet extends HttpServlet {
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        resp.getWriter().write("Hello world");
+    RouterFunction<ServerResponse> routes() {
+        return RouterFunctions.route()
+                .GET("/hello", request -> ServerResponse.ok().body("Hello world"))
+                .build();
     }
 }
