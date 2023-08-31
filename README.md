@@ -30,6 +30,10 @@ make spring-boot-8
 make spring-boot-9
 make spring-boot-10
 make spring-boot-11
+make spring-boot-12
+make spring-boot-13
+make spring-boot-14
+make spring-boot-15
 
 open http://localhost:8080/hello
 curl http://localhost:8080/hello
