@@ -1,67 +1,41 @@
 package info.jab.ms.boot11;
 
-import jakarta.annotation.PostConstruct;
-import org.springframework.boot.autoconfigure.web.ServerProperties;
-import org.springframework.boot.autoconfigure.web.servlet.DispatcherServletRegistrationBean;
-import org.springframework.boot.autoconfigure.web.servlet.WebMvcProperties;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
-import org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.DispatcherServlet;
-import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import org.apache.catalina.Context;
+import org.apache.catalina.LifecycleException;
+import org.apache.catalina.connector.Connector;
+import org.apache.catalina.startup.Tomcat;
+import org.apache.coyote.http11.Http11Nio2Protocol;
+import java.io.File;
+import java.io.IOException;
+import java.util.Collections;
 
 public class Main {
 
-    public static void main(String[] args) {
-        new AnnotationConfigServletWebServerApplicationContext(WebConfig.class);
+    public static void main(String[] args) throws LifecycleException {
+        Tomcat tomcat = new Tomcat();
+
+        File base = new File(System.getProperty("java.io.tmpdir"));
+        Context context = tomcat.addContext("", base.getAbsolutePath());
+
+        context.addServletContainerInitializer((c, ctx) -> {
+            HelloServlet helloServlet = new HelloServlet();
+            ctx.addServlet("helloServlet", helloServlet).addMapping("/hello");
+        }, Collections.emptySet());
+
+        tomcat.start();
+
+        Connector connector = new Connector(new Http11Nio2Protocol());
+        connector.setPort(8080);
+        tomcat.setConnector(connector);
     }
 }
 
-@Configuration
-@ComponentScan
-//@PropertySource("classpath:application.properties")
-@EnableConfigurationProperties({WebMvcProperties.class, ServerProperties.class})
-class WebConfig {
-    @Bean
-    public TomcatServletWebServerFactory tomcatServletWebServerFactory(ServerProperties serverProperties) {
-        return new TomcatServletWebServerFactory();
-    }
-
-    @Bean
-    public DispatcherServlet dispatcherServlet() {
-        return new DispatcherServlet();
-    }
-
-    @Bean
-    public DispatcherServletRegistrationBean dispatcherServletRegistrationBean(
-            DispatcherServlet dispatcherServlet, WebMvcProperties webMvcProperties) {
-        DispatcherServletRegistrationBean registrationBean = new DispatcherServletRegistrationBean(dispatcherServlet, "/");
-        registrationBean.setLoadOnStartup(webMvcProperties.getServlet().getLoadOnStartup());
-        return registrationBean;
-    }
-
-    @Bean
-    public RequestMappingHandlerMapping requestMappingHandlerMapping() {
-        return new RequestMappingHandlerMapping();
-    }
-
-}
-
-@RestController
-class MyRestController {
-
-    @GetMapping("/hello")
-    public String hello() {
-        return "Hello world";
-    }
-
-    @PostConstruct
-    private void postConstruct() {
-        System.out.println("Running RestController");
+class HelloServlet extends HttpServlet {
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        resp.getWriter().write("Hello world");
     }
 }

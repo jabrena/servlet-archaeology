@@ -57,3 +57,7 @@ jobs:
           run_test "spring-boot-9"
           run_test "spring-boot-10"
           run_test "spring-boot-11"
+          run_test "spring-boot-12"
+          run_test "spring-boot-13"
+          run_test "spring-boot-14"
+          run_test "spring-boot-15"
